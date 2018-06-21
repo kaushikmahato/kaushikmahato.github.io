@@ -33,9 +33,24 @@
       },
      dataLevel: "FULL"
      }
+    });
+
+    V.on("payment.success", function(payment) {
+        alert(("It worked! Check Console for details. ");
+        console.log("It worked!");
+        console.log(JSON.stringify(payment));
+    });
+    V.on("payment.cancel", function(payment) {
+        alert("Someone cancelled! Check Console for details. ");
+        console.log("Someone cancelled!");
+        console.log(JSON.stringify(payment));
+    });
+    V.on("payment.error", function(payment, error) {
+        alert("Ooops! Error, Check Console for details. ");
+        console.log("Ooops!");
+        console.log(JSON.stringify(payment));
+    });
    }
-  );
-V.on("payment.success", function(payment) {alert(JSON.stringify(payment)); console.log("It worked!");console.log(JSON.stringify(payment)); }); V.on("payment.cancel", function(payment) {alert(JSON.stringify(payment)); console.log("Someone cancelled!");console.log(JSON.stringify(payment));}); V.on("payment.error", function(payment, error) {alert(JSON.stringify(error)); console.log("Ooops!");console.log(JSON.stringify(payment)); }); }  
   </script>
 
 </head>
@@ -46,7 +61,7 @@ V.on("payment.success", function(payment) {alert(JSON.stringify(payment)); conso
 <div style="text-align: left; padding: 10px; margin-top: 20px; text-transform: uppercase; border-bottom: 1px solid #CCC; font-size: 1.15em;">Cart</div>
 <div style="margin: 15px 10px; display: inline-block;">
 
-<div style="display: inline-block; width: 150px; height: 150px; border: 1px solid #DDD; background-size: cover; background-position: center; float: left;" id="image"><img src="https://images-na.ssl-images-amazon.com/images/I/711MkPTJ4OL._SY355_.jpg" width=150px height=150px >Product image</div>
+<div style="display: inline-block; width: 150px; height: 150px; border: 1px solid #DDD; background-size: cover; background-position: center; float: left;" id="image"><img src="https://images-na.ssl-images-amazon.com/images/I/711MkPTJ4OL._SY355_.jpg" width=150px height=150px alt="Product image"></div>
 
 <div style="display: inline-block; width: 100px; height: 150px; padding-left: 10px;">
 <p id="search2" style="font-size: 1.25em; word-wrap: break-word;">Product...</p>
