@@ -4,6 +4,10 @@
    var amount = "10"
    function updateAmount(){
         this.amount = document.getElementById('amount').value
+        var script = document.createElement('script');
+       script.setAttribute('type', 'text/javascript');
+       script.setAttribute('src', 'https://sandbox-assets.secure.checkout.visa.com/checkout-widget/resources/js/integration/v1/sdk.js');
+       document.head.appendChild(script);
     }
    function onVisaCheckoutReady() {
      V.init({
@@ -85,8 +89,10 @@ div {
  src="https://sandbox.secure.checkout.visa.com/wallet-services-web/xo/button.png?
   cardBrands=VISA,MASTERCARD,DISCOVER,AMEX" onclick="updateAmount();"/>
     </div>
+<!--
  <script type="text/javascript"
   src="https://sandbox-assets.secure.checkout.visa.com/checkout-widget/resources/js/integration/v1/sdk.js">
  </script>
+-->
 </body>
 </html>
