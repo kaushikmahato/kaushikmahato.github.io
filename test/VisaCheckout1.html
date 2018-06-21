@@ -1,0 +1,48 @@
+<html>
+ <head>
+  <script type="text/javascript">
+   function onVisaCheckoutReady() {
+     V.init({
+     apikey: "CIXZ0Q8R95YSNGW33ONH21E4bAp5xD5kq6IhVWRywoEAyGvK4",
+     paymentRequest: {
+      currencyCode: "USD",
+      total : "16"
+    },
+    settings: {
+      locale: "en_US",
+      countryCode: "US",
+      displayName: "Hackathon",
+      logoUrl: "https://www.authorize.net/etc/clientlibs/anet/main/fonts/anet-logo-white.svg",
+      websiteUrl: "www.authorize.net",
+      customerSupportUrl: "www.developer.authorize.net",
+      shipping: {
+       acceptedRegions: ["US", "CA"],
+       collectShipping: "true"
+      },
+      payment: {
+       cardBrands: [
+        "VISA",
+        "MASTERCARD",
+		"DISCOVER",
+		"AMEX"],
+       acceptCanadianVisaDebit: "true"
+      },
+      review: {
+       message: "Merchant defined message",
+       buttonAction: "Continue"
+      },
+     dataLevel: "FULL"
+     }
+   }
+  );
+V.on("payment.success", function(payment) {alert(JSON.stringify(payment)); console.log("It worked!");console.log(JSON.stringify(payment)); }); V.on("payment.cancel", function(payment) {alert(JSON.stringify(payment)); console.log("Someone cancelled!");console.log(JSON.stringify(payment));}); V.on("payment.error", function(payment, error) {alert(JSON.stringify(error)); console.log("Ooops!");console.log(JSON.stringify(payment)); }); }  
+  </script> 
+ </head> 
+<body>  <img alt="Visa Checkout" class="v-button" role="button" style="display: block; margin-left: auto;margin-right: auto;"
+ src="https://sandbox.secure.checkout.visa.com/wallet-services-web/xo/button.png?
+  cardBrands=VISA,MASTERCARD,DISCOVER,AMEX"/>
+ <script type="text/javascript"
+  src="https://sandbox-assets.secure.checkout.visa.com/checkout-widget/resources/js/integration/v1/sdk.js">
+ </script>
+</body>
+</html>
