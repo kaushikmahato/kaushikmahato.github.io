@@ -10,7 +10,7 @@
 -->
 
 <head>
-    <title>Sample form</title>
+    <title>Sample ACCEPT Form</title>
 </head>
 
 <body>
@@ -19,7 +19,15 @@
     src="https://jstest.authorize.net/v3/AcceptUI.js"
     charset="utf-8">
 </script>
-
+<h2>Merchant Store</h2>
+    <h3>Merchant Details</h3>
+    <li>Authorize.Net AccountID 676177</li>
+        <li>username: hackdev1</li>
+        <li>password: Hackdev1</li>
+        <li>apiLoginId: 244dkNUJcH</li>
+        <li>TransactionKey: 34yuE4pN7y8nM3Qr</li>
+        <li>Public Client Key: 7ysxr65RL6ZDp9dPqSGbAk75k9nS4sDCPbGAbhFnv2Yw399cTUrMTv928rp8EFcA</li>
+    <hr/>
 <form id="paymentForm"
     method="POST"
     action="https://kaushikmahato.github.io/visa/test/acceptUI-1.html">
@@ -52,7 +60,7 @@ function responseHandler(response) {
         console.log("Token Received");
         console.log(response.opaqueData.dataDescriptor);
         console.log(response.opaqueData.dataValue);
-        paymentFormUpdate(response.opaqueData);
+//        paymentFormUpdate(response.opaqueData);
     }
 }
 
