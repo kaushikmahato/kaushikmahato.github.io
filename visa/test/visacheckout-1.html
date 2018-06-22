@@ -38,7 +38,10 @@
     V.on("payment.success", function(payment) {
         alert("It worked! Check Console for details. ");
         console.log("It worked!");
-        console.log(JSON.stringify(payment));
+        console.log(payment);
+        console.log(payment.encPaymentData);
+        console.log(payment.encKey);
+        console.log(payment.callid);
     });
     V.on("payment.cancel", function(payment) {
         alert("Someone cancelled! Check Console for details. ");

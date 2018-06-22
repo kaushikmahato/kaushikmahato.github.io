@@ -60,6 +60,7 @@ function responseHandler(response) {
     } else {
         alert("It worked! Check Console for details. ");
         console.log("Token Received");
+        console.log(response.opaqueData);
         console.log(response.opaqueData.dataDescriptor);
         console.log(response.opaqueData.dataValue);
 //        paymentFormUpdate(response.opaqueData);
