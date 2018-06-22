@@ -48,6 +48,7 @@
 
 function responseHandler(response) {
     if (response.messages.resultCode === "Error") {
+        alert("Ooops! Error, Check Console for details. ");
         var i = 0;
         while (i < response.messages.message.length) {
             console.log(
@@ -57,6 +58,7 @@ function responseHandler(response) {
             i = i + 1;
         }
     } else {
+        alert("It worked! Check Console for details. ");
         console.log("Token Received");
         console.log(response.opaqueData.dataDescriptor);
         console.log(response.opaqueData.dataValue);
@@ -65,19 +67,19 @@ function responseHandler(response) {
 }
 
 
-function paymentFormUpdate(opaqueData) {
-    document.getElementById("dataDescriptor").value = opaqueData.dataDescriptor;
-    document.getElementById("dataValue").value = opaqueData.dataValue;
-
-    // If using your own form to collect the sensitive data from the customer,
-    // blank out the fields before submitting them to your server.
-    // document.getElementById("cardNumber").value = "";
-    // document.getElementById("expMonth").value = "";
-    // document.getElementById("expYear").value = "";
-    // document.getElementById("cardCode").value = "";
-
-    document.getElementById("paymentForm").submit();
-}
+//function paymentFormUpdate(opaqueData) {
+//    document.getElementById("dataDescriptor").value = opaqueData.dataDescriptor;
+//    document.getElementById("dataValue").value = opaqueData.dataValue;
+//
+//    // If using your own form to collect the sensitive data from the customer,
+//    // blank out the fields before submitting them to your server.
+//    // document.getElementById("cardNumber").value = "";
+//    // document.getElementById("expMonth").value = "";
+//    // document.getElementById("expYear").value = "";
+//    // document.getElementById("cardCode").value = "";
+//
+//    document.getElementById("paymentForm").submit();
+//}
 </script>
 
 </body>

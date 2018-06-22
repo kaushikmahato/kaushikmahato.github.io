@@ -19,6 +19,15 @@
     src="https://jstest.authorize.net/v1/Accept.js"
     charset="utf-8">
 </script>
+<h2>Merchant Store</h2>
+    <h3>Merchant Details</h3>
+    <li>Authorize.Net AccountID 676177</li>
+        <li>username: hackdev1</li>
+        <li>password: Hackdev1</li>
+        <li>apiLoginId: 244dkNUJcH</li>
+        <li>TransactionKey: 34yuE4pN7y8nM3Qr</li>
+        <li>Public Client Key: 7ysxr65RL6ZDp9dPqSGbAk75k9nS4sDCPbGAbhFnv2Yw399cTUrMTv928rp8EFcA</li>
+    <hr/>
 
 <form id="paymentForm"
     method="POST"
@@ -40,8 +49,8 @@
 
 function sendPaymentDataToAnet() {
     var authData = {};
-        authData.clientKey = "5FcB6WrfHGS76gHW3v7btBCE3HuuBuke9Pj96Ztfn5R32G5ep42vne7MCWZtAucY";
-        authData.apiLoginID = "5KP3u95bQpv";
+        authData.clientKey = "7ysxr65RL6ZDp9dPqSGbAk75k9nS4sDCPbGAbhFnv2Yw399cTUrMTv928rp8EFcA";
+        authData.apiLoginID = "244dkNUJcH";
 
     var cardData = {};
         cardData.cardNumber = document.getElementById("cardNumber").value;
