@@ -1,0 +1,102 @@
+<html>
+ <head>
+  <script type="text/javascript">
+   function onVisaCheckoutReady() {
+     V.init({
+     apikey: "CIXZ0Q8R95YSNGW33ONH21E4bAp5xD5kq6IhVWRywoEAyGvK4",
+     paymentRequest: {
+      currencyCode: "USD",
+      total : "12"
+    },
+    settings: {
+      locale: "en_US",
+      countryCode: "US",
+      displayName: "Hackathon Store",
+      logoUrl: "https://www.authorize.net/etc/clientlibs/anet/main/fonts/anet-logo-white.svg",
+      websiteUrl: "www.authorize.net",
+      customerSupportUrl: "www.developer.authorize.net",
+      shipping: {
+       acceptedRegions: ["US", "CA"],
+       collectShipping: "true"
+      },
+      payment: {
+       cardBrands: [
+        "VISA",
+        "MASTERCARD",
+		"DISCOVER",
+		"AMEX"],
+       acceptCanadianVisaDebit: "true"
+      },
+      review: {
+       message: "Authorize.Net",
+       buttonAction: "Continue"
+      },
+     dataLevel: "FULL"
+     }
+    });
+
+    V.on("payment.success", function(payment) {
+        alert("It worked! Check Console for details. ");
+        console.log("It worked!");
+        console.log(JSON.stringify(payment));
+    });
+    V.on("payment.cancel", function(payment) {
+        alert("Someone cancelled! Check Console for details. ");
+        console.log("Someone cancelled!");
+        console.log(JSON.stringify(payment));
+    });
+    V.on("payment.error", function(payment, error) {
+        alert("Ooops! Error, Check Console for details. ");
+        console.log("Ooops!");
+        console.log(JSON.stringify(payment));
+    });
+   }
+  </script>
+
+</head>
+<body>
+<div style="width: 100%; max-width: 400px; border: 1px solid #CCC; min-height: 500px; background-color: #FFF; border-radius: 5px; margin: 0 auto; padding: 5px;">
+
+<div style="text-align: left; padding: 10px; font-weight: bold; border-bottom: 1px solid #CCC; font-size: 1.35em;" id="cart-title-output">Hackathon Store</div>
+<div style="text-align: left; padding: 10px; margin-top: 20px; text-transform: uppercase; border-bottom: 1px solid #CCC; font-size: 1.15em;">Cart</div>
+<div style="margin: 15px 10px; display: inline-block;">
+
+<div style="display: inline-block; width: 150px; height: 150px; border: 1px solid #DDD; background-size: cover; background-position: center; float: left;" id="image"><img src="https://images-na.ssl-images-amazon.com/images/I/711MkPTJ4OL._SY355_.jpg" width=150px height=150px alt="Product image"></div>
+
+<div style="display: inline-block; width: 100px; height: 150px; padding-left: 10px;">
+<p id="search2" style="font-size: 1.25em; word-wrap: break-word;">Product...</p>
+<p><span style="float: left; font-weight: 400;">Price:</span> <span style="float: right;"><span id="totalCurr1">USD</span> <span id="totalCost1">12.00</span></span></p>
+</div>
+</div>
+<div style="text-align: left; padding: 10px; margin-top: 20px; text-transform: uppercase; border-bottom: 1px solid #CCC; font-size: 1.15em;">Your Order</div>
+<div style="margin: 15px 30px;">
+<div>
+<span style="font-weight: 400;">Subtotal:</span>
+<span style="float: right;">
+<span id="totalCurr1b">USD</span>
+<span id="totalCost1b">12.00</span>
+</span>
+</div>
+<div>
+<span style="font-weight: 400;">Shipping:</span>
+<span style="float: right; text-transform: uppercase;">Free</span>
+</div>
+<div style="border-top: 1px solid #CCC; margin-top: 5px; padding-top: 5px;">
+<span style="font-weight: 400; text-transform: uppercase;">Order Total:</span>
+<span style="float: right;">
+<span id="totalCurr1c">USD</span>
+<span id="totalCost1c">12.00</span>
+</span>
+</div>
+</div>
+<div id="checkoutButton" style="text-align: center; margin: 30px 0px;">
+<img alt="Visa Checkout" class="v-button" role="button" src="https://sandbox.secure.checkout.visa.com/wallet-services-web/xo/button.png?cobrand=VISA" id="VisaCheckoutButton" tabindex="0" style="cursor: pointer; transition-property: filter; transition-duration: 0.25s;">
+
+<div id="button-cover" style="border: 0px solid white; width: 300px; margin: -54px auto auto; height: 50px; z-index: 3; background: white; opacity: 1;"></div>
+</div>
+</div>
+ <script type="text/javascript"
+  src="https://sandbox-assets.secure.checkout.visa.com/checkout-widget/resources/js/integration/v1/sdk.js">
+ </script>
+</body>
+</html>
