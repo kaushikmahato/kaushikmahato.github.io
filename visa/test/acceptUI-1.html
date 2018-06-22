@@ -22,14 +22,14 @@
 
 <form id="paymentForm"
     method="POST"
-    action="http://postb.in/b/Y1FNYESv">
+    action="https://kaushikmahato.github.io/visa/test/acceptUI-1.html">
     <input type="hidden" name="dataValue" id="dataValue" />
     <input type="hidden" name="dataDescriptor" id="dataDescriptor" />
     <button type="button"
         class="AcceptUI"
         data-billingAddressOptions='{"show":true, "required":false}'
-        data-apiLoginID="5KP3u95bQpv"
-        data-clientKey="5FcB6WrfHGS76gHW3v7btBCE3HuuBuke9Pj96Ztfn5R32G5ep42vne7MCWZtAucY"
+        data-apiLoginID="244dkNUJcH"
+        data-clientKey="58Ur68c2tnE452gbmhWX4AT5Lpc9wQGCG5CcR39nZRU6NJmh2W7BzvqSRz3rJV5k"
         data-acceptUIFormBtnTxt="Submit"
         data-acceptUIFormHeaderTxt="Card Information"
         data-responseHandler="responseHandler">Pay
@@ -49,6 +49,9 @@ function responseHandler(response) {
             i = i + 1;
         }
     } else {
+        console.log("Token Received");
+        console.log(response.opaqueData.dataDescriptor);
+        console.log(response.opaqueData.dataValue);
         paymentFormUpdate(response.opaqueData);
     }
 }
