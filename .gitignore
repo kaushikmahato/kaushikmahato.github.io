@@ -1,0 +1,8 @@
+# Mac OS General
+.DS_Store
+
+# Windows thumbnail cache files
+Thumbs.db
+
+# Windows Folder config file
+[Dd]esktop.ini
