@@ -6,3 +6,8 @@ Thumbs.db
 
 # Windows Folder config file
 [Dd]esktop.ini
+
+_site
+.sass-cache
+.jekyll-metadata
+Gemfile.lock
