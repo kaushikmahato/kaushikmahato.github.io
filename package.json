@@ -36,5 +36,11 @@
     "@tailwindcss/typography": "^0.5.19",
     "astro-pagefind": "^1.8.6",
     "tailwind-merge": "^3.5.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp"
+    ]
   }
 }
