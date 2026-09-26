@@ -1,6 +1,5 @@
 ---
 draft: false
-featured: "1"
 title: "Welcome to My New Website"
 description: "A quick introduction to my new personal website built with Astro."
 authors:
