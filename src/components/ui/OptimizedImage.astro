@@ -1,0 +1,60 @@
+---
+import { isCloudinaryUrl, lqip } from "../../utils/cloudinary";
+import { cn } from "../../utils/styles";
+import { CldImage, type CldImageProps } from "astro-cloudinary";
+
+interface Props extends CldImageProps {
+    wrapperClass?: string;
+    imageClass?: string;
+}
+
+const {
+    src,
+    alt,
+    wrapperClass = "",
+    imageClass = "",
+    loading = "lazy",
+    fetchpriority,
+    ...rest
+} = Astro.props;
+
+const fetchPriorityVal =
+    loading === "eager" ? (fetchpriority ?? "high") : undefined;
+
+const lqipUrl = isCloudinaryUrl(src) ? lqip(src) : undefined;
+---
+
+<div
+    class={cn(
+        "relative overflow-hidden bg-neutral-200 dark:bg-neutral-700",
+        wrapperClass,
+    )}
+>
+    {
+        lqipUrl && (
+            <img
+                data-pagefind-ignore
+                src={lqipUrl}
+                alt=""
+                aria-hidden="true"
+                class={cn(
+                    "absolute inset-0 h-full w-full scale-105 object-cover blur-xl",
+                    imageClass,
+                )}
+                loading="eager"
+                decoding="async"
+            />
+        )
+    }
+
+    <CldImage
+        src={src}
+        alt={alt}
+        class={cn("absolute inset-0 h-full w-full object-cover", imageClass)}
+        loading={loading}
+        fetchpriority={fetchPriorityVal}
+        format="auto"
+        quality="auto"
+        {...rest}
+    />
+</div>

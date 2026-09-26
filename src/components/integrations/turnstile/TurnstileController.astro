@@ -1,0 +1,103 @@
+<script is:inline>
+    window.turnstileWidgets = window.turnstileWidgets || [];
+
+    function cleanupOldWidgets() {
+        if (!window.turnstile || !Array.isArray(window.turnstileWidgets))
+            return;
+        for (const w of window.turnstileWidgets) {
+            try {
+                window.turnstile.remove(w.id);
+            } catch {}
+        }
+        window.turnstileWidgets.length = 0;
+    }
+
+    function initializeTurnstile() {
+        if (!window.turnstile) return;
+
+        const forms = document.querySelectorAll(
+            "form[data-requires-turnstile]",
+        );
+        if (forms.length === 0) return;
+
+        cleanupOldWidgets();
+
+        const isDark = document.documentElement.classList.contains("dark");
+        const theme = isDark ? "dark" : "light";
+
+        forms.forEach((form) => {
+            const wrapper = form.querySelector(".ts-wrap");
+            const container = form.querySelector(".cf-turnstile");
+            const submit = form.querySelector('button[type="submit"]');
+
+            if (!wrapper || !container || !submit) {
+                console.error("Turnstile form is missing required elements.");
+                return;
+            }
+
+            submit.disabled = true;
+
+            let id;
+            try {
+                id = window.turnstile.render(container, {
+                    sitekey: container.dataset.sitekey,
+                    action: container.dataset.action,
+                    cData: container.dataset.cdata,
+                    theme,
+
+                    callback: (_token) => {
+                        submit.disabled = false;
+                        wrapper.classList.add("turnstile-container-collapsed");
+                    },
+
+                    "error-callback": (_error) => {
+                        submit.disabled = true;
+                    },
+
+                    "expired-callback": () => {
+                        submit.disabled = true;
+                        wrapper.classList.remove(
+                            "turnstile-container-collapsed",
+                        );
+                    },
+                });
+            } catch (e) {
+                console.error("Failed to render Turnstile widget:", e);
+                return;
+            }
+
+            window.turnstileWidgets.push({ id });
+        });
+    }
+
+    // ---- Boot logic for MPA/SSR (Unchanged) ----
+    const prevOnLoad = window.onTurnstileAPILoad;
+    window.onTurnstileAPILoad = function () {
+        try {
+            prevOnLoad && prevOnLoad();
+        } catch {}
+        initializeTurnstile();
+    };
+
+    function domReady(fn) {
+        if (
+            document.readyState === "complete" ||
+            document.readyState === "interactive"
+        )
+            fn();
+        else document.addEventListener("DOMContentLoaded", fn, { once: true });
+    }
+    domReady(() => {
+        if (window.turnstile) initializeTurnstile();
+    });
+
+    const observer = new MutationObserver((muts) => {
+        for (const m of muts) {
+            if (m.type === "attributes" && m.attributeName === "class") {
+                if (window.turnstile) initializeTurnstile();
+                break;
+            }
+        }
+    });
+    observer.observe(document.documentElement, { attributes: true });
+</script>

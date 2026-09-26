@@ -1,0 +1,171 @@
+---
+import { getCollection } from "astro:content";
+import Container from "../components/layouts/Container.astro";
+import ContentGrid from "../components/layouts/sections/ContentGrid.astro";
+import FeaturedContent from "../components/layouts/sections/FeaturedContent.astro";
+import EmptyState from "../components/ui/EmptyState.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { attachMeta } from "../utils/meta";
+
+const allPosts = await getCollection("blog", ({ data }) => !data.draft);
+const allProjects = await getCollection("projects", ({ data }) => !data.draft);
+
+const sortedPosts = allPosts.sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+const sortedProjects = allProjects.sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const latestPosts = sortedPosts.slice(0, 3).map((post) => attachMeta(post));
+const latestProjects = sortedProjects
+    .slice(0, 2)
+    .map((project) => attachMeta(project));
+
+const featured = [...allPosts, ...allProjects]
+    .filter((item) => item.data.featured !== undefined)
+    .sort((a, b) => (a.data.featured ?? 0) - (b.data.featured ?? 0));
+
+const hasContent =
+    featured.length > 0 || latestPosts.length > 0 || latestProjects.length > 0;
+
+const institutions = [
+    { name: "IIT Kharagpur", note: "B.Tech CS" },
+    { name: "Visa", note: "Infrastructure" },
+    { name: "VerSe", note: "DailyHunt & Josh Group" },
+    { name: "WEX", note: "Sr. Staff Engineer, R&D" },
+];
+---
+
+<BaseLayout
+    title="Kaushik Kumar Mahato"
+    description="Deep-Tech Architect & Exited Founder | IIT Kharagpur | Enterprise R&D in Agentic AI & Fintech"
+>
+    <Container class="space-y-16 py-12">
+        <!-- Hero Header -->
+        <section class="space-y-6 pt-2">
+            <h1
+                class="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl text-neutral-900 dark:text-neutral-50"
+            >
+                Hey there 👋
+            </h1>
+
+            <div
+                class="space-y-4 text-base sm:text-lg text-neutral-700 dark:text-neutral-300 leading-relaxed max-w-3xl"
+            >
+                <p>
+                    I'm <strong
+                        class="font-semibold text-neutral-900 dark:text-neutral-100"
+                        >Kaushik Kumar Mahato</strong
+                    > — an architect, exited founder, and systems thinker. Welcome
+                    to my personal website!
+                </p>
+                <p>
+                    Currently, I lead enterprise R&amp;D within strategic
+                    innovation as a Senior Staff Engineer at <a
+                        href="https://www.wexinc.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="font-medium text-neutral-900 underline decoration-neutral-400 decoration-dotted underline-offset-4 hover:decoration-solid dark:text-neutral-100"
+                        >WEX</a
+                    >, focusing on autonomous AI agent frameworks, multi-agent
+                    orchestration layers, and modern fintech infrastructure.
+                </p>
+                <p>
+                    Previously, I spent a decade tackling distributed systems
+                    challenges at places like <a
+                        href="https://visa.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="font-medium text-neutral-900 underline decoration-neutral-400 decoration-dotted underline-offset-4 hover:decoration-solid dark:text-neutral-100"
+                        >Visa</a
+                    > and <a
+                        href="https://www.verse.in/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="font-medium text-neutral-900 underline decoration-neutral-400 decoration-dotted underline-offset-4 hover:decoration-solid dark:text-neutral-100"
+                        >VerSe (DailyHunt Group)</a
+                    >, founded a consumer social platform that scaled to
+                    millions of users and led to an acquisition, and graduated
+                    in Computer Science from <a
+                        href="https://www.iitkgp.ac.in"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="font-medium text-neutral-900 underline decoration-neutral-400 decoration-dotted underline-offset-4 hover:decoration-solid dark:text-neutral-100"
+                        >IIT Kharagpur</a
+                    >.
+                </p>
+                <p>
+                    Learn more <a
+                        href="/about"
+                        class="font-medium text-neutral-900 underline underline-offset-4 hover:text-blue-600 dark:text-neutral-100 dark:hover:text-yellow-400"
+                        >about me</a
+                    >, check out my <a
+                        href="/projects"
+                        class="font-medium text-neutral-900 underline underline-offset-4 hover:text-blue-600 dark:text-neutral-100 dark:hover:text-yellow-400"
+                        >projects</a
+                    >, or explore my latest posts below 👇
+                </p>
+            </div>
+
+            <!-- Social Proof Bar -->
+            <div
+                class="border-y border-neutral-200 py-6 dark:border-neutral-800"
+            >
+                <p
+                    class="text-xs font-semibold uppercase tracking-wider text-neutral-400 dark:text-neutral-500"
+                >
+                    Experience &amp; Heritage
+                </p>
+                <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                    {
+                        institutions.map((item) => (
+                            <div class="rounded-lg border border-neutral-200 bg-neutral-50/70 p-3.5 transition-colors hover:border-neutral-300 dark:border-neutral-800 dark:bg-neutral-800/40 dark:hover:border-neutral-700">
+                                <span class="block text-base font-bold text-neutral-900 dark:text-neutral-100">
+                                    {item.name}
+                                </span>
+                                <span class="block text-xs text-neutral-500 dark:text-neutral-400">
+                                    {item.note}
+                                </span>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+        </section>
+
+        {
+            hasContent ? (
+                <>
+                    {featured.length > 0 && (
+                        <FeaturedContent items={featured} />
+                    )}
+
+                    {latestPosts.length > 0 && (
+                        <ContentGrid
+                            title="Latest Posts"
+                            href="/blog"
+                            viewAllText="View all posts →"
+                            items={latestPosts}
+                        />
+                    )}
+
+                    {latestProjects.length > 0 && (
+                        <ContentGrid
+                            title="Latest Projects"
+                            href="/projects"
+                            viewAllText="View all projects →"
+                            items={latestProjects}
+                            class="grid grid-cols-1 gap-8 md:grid-cols-2"
+                        />
+                    )}
+                </>
+            ) : (
+                <EmptyState
+                    title="Nothing here yet..."
+                    message="Check back soon for new items!"
+                />
+            )
+        }
+    </Container>
+</BaseLayout>

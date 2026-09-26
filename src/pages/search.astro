@@ -1,0 +1,24 @@
+---
+import "../styles/search.css";
+
+import Container from "../components/layouts/Container.astro";
+import PageTitle from "../components/ui/PageTitle.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PagefindSearch from "astro-pagefind/components/Search";
+---
+
+<BaseLayout
+    title="Search"
+    description="Search articles and projects from Kaushik Kumar Mahato."
+    ogImage="https://res.cloudinary.com/dellp9a4z/image/upload/v1756758390/og-search_t1fak7.png"
+>
+    <Container class="py-12">
+        <PageTitle title="Search" />
+
+        <PagefindSearch
+            id="search"
+            className="pagefind-ui"
+            uiOptions={{ showSubResults: true, autofocus: true }}
+        />
+    </Container>
+</BaseLayout>

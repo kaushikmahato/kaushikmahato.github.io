@@ -1,0 +1,42 @@
+---
+// export const prerender = false;
+
+import { actions } from "astro:actions";
+import NewsletterForm from "../components/forms/NewsletterForm.astro";
+import Container from "../components/layouts/Container.astro";
+import PageTitle from "../components/ui/PageTitle.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const result = Astro.getActionResult(actions.newsletterSubscribe);
+
+if (result?.data?.ok) {
+    return Astro.redirect("/newsletter?success=1");
+}
+---
+
+<BaseLayout
+    title="Newsletter"
+    description="Subscribe to my newsletter for updates."
+    ogImage="https://res.cloudinary.com/dellp9a4z/image/upload/v1756758390/og-newsletter_qht4nj.png"
+>
+    <Container class="mx-auto max-w-2xl py-12">
+        <PageTitle title="Newsletter" />
+        <NewsletterForm
+            variant="inline"
+            showResult={true}
+            showLegal={true}
+            turnstileClass="flex justify-center"
+            result={result}
+        />
+    </Container>
+</BaseLayout>
+
+<script is:inline>
+    (function () {
+        const url = new URL(location.href);
+        if (url.searchParams.has("_action")) {
+            url.searchParams.delete("_action");
+            history.replaceState(null, "", url);
+        }
+    })();
+</script>

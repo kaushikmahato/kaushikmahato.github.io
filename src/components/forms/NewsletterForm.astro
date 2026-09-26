@@ -1,0 +1,119 @@
+---
+import { actions } from "astro:actions";
+import TurnstileWidget from "../integrations/turnstile/TurnstileWidget.astro";
+import Button from "../ui/button/Button.astro";
+import { InputField, ResponseMessage } from "../ui/form";
+import Link from "../ui/link/Link.astro";
+import { cn } from "../../utils/styles";
+
+interface Props {
+    variant?: "inline" | "stack";
+    showLegal?: boolean;
+    showResult?: boolean;
+    class?: string;
+    turnstileClass?: string;
+    result?: { data?: any; error?: { code?: string; message?: string } };
+}
+
+const {
+    variant = "inline",
+    showLegal = false,
+    showResult = false,
+    class: cls,
+    turnstileClass,
+    result,
+} = Astro.props;
+
+const successParam = Astro.url.searchParams.get("success") === "1";
+const showSuccess = showResult ? successParam : false;
+
+const row =
+    variant === "inline"
+        ? "flex w-full flex-col gap-4 sm:flex-row sm:gap-2"
+        : "flex w-full flex-col gap-3";
+---
+
+<div class={cls}>
+    {
+        showResult && showSuccess ? (
+            <ResponseMessage title="Thank You!">
+                <p class="mt-2">
+                    Check your inbox to confirm your subscription.
+                </p>
+            </ResponseMessage>
+        ) : (
+            <form
+                method="POST"
+                data-requires-turnstile
+                data-newsletter-form
+                {...(showResult
+                    ? { action: actions.newsletterSubscribe }
+                    : { "data-newsletter-ajax": true })}
+            >
+                {showResult && result?.error && (
+                    <ResponseMessage
+                        title="Oops! Something went wrong."
+                        intent="error"
+                        class="mb-6"
+                    >
+                        <p>
+                            {result.error.code === "BAD_REQUEST"
+                                ? "We could not subscribe this email. Please check and try again."
+                                : "Something went wrong on our side. Please try again later."}
+                        </p>
+                    </ResponseMessage>
+                )}
+
+                <div class={row}>
+                    <InputField
+                        type="email"
+                        name="email"
+                        placeholder="your@email.com"
+                        required
+                        maxlength="254"
+                        autocomplete="email"
+                        autocapitalize="off"
+                        spellcheck="false"
+                    />
+                    <Button type="submit" data-newsletter-btn disabled>
+                        Subscribe
+                    </Button>
+                </div>
+
+                <TurnstileWidget
+                    action="newsletter"
+                    class={cn("mt-4", turnstileClass)}
+                />
+
+                {!showResult && (
+                    <p
+                        class="mt-3 text-sm"
+                        role="status"
+                        aria-live="polite"
+                        data-newsletter-msg
+                    />
+                )}
+
+                {showLegal && (
+                    <div class="mt-4 flex justify-center">
+                        <div class="max-w-xl text-center text-sm leading-relaxed text-gray-700 dark:text-gray-300">
+                            By subscribing, you agree to the
+                            <Link href="/legal/terms-of-service">
+                                {" "}
+                                Terms &amp; Conditions{" "}
+                            </Link>
+                            and
+                            <Link href="/legal/privacy-policy">
+                                {" "}
+                                Privacy Policy{" "}
+                            </Link>
+                            . You can unsubscribe at any time.
+                        </div>
+                    </div>
+                )}
+            </form>
+        )
+    }
+</div>
+
+{!showResult && <script src="../../utils/client-newsletter.ts" />}

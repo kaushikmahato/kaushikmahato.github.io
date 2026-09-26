@@ -1,0 +1,28 @@
+---
+import { cn } from "../../../utils/styles";
+
+interface Props {
+    size?: "normal" | "compact";
+    action?: string;
+    cdata?: string;
+    class?: string;
+}
+const { size = "normal", class: cls, action, cdata } = Astro.props;
+
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+if (!siteKey) {
+    console.warn("PUBLIC_TURNSTILE_SITE_KEY is missing");
+}
+---
+
+<div class={cn("ts-wrap", cls)}>
+    <div
+        class="cf-turnstile"
+        data-sitekey={siteKey}
+        data-size={size}
+        data-action={action}
+        data-cdata={cdata}
+        data-appearance="always"
+    >
+    </div>
+</div>

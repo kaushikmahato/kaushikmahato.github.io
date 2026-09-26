@@ -1,0 +1,190 @@
+---
+// export const prerender = false;
+
+import { actions } from "astro:actions";
+import TurnstileWidget from "../components/integrations/turnstile/TurnstileWidget.astro";
+import Container from "../components/layouts/Container.astro";
+import Button from "../components/ui/button/Button.astro";
+import { InputField, ResponseMessage, TextArea } from "../components/ui/form";
+import Link from "../components/ui/link/Link.astro";
+import PageTitle from "../components/ui/PageTitle.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const result = Astro.getActionResult(actions.contact);
+
+if (result?.data?.ok) {
+    return Astro.redirect("/contact?success=1");
+}
+
+const showSuccess = Astro.url.searchParams.get("success") === "1";
+---
+
+<BaseLayout
+    title="Contact"
+    description="Have a question or just want to say hi? Drop me a message."
+    ogImage="https://res.cloudinary.com/dellp9a4z/image/upload/v1756758384/og-contact_fvjj33.png"
+>
+    <Container class="mx-auto max-w-2xl py-12">
+        <PageTitle title="Get in Touch" />
+
+        {
+            showSuccess ? (
+                <ResponseMessage title="Thank You!">
+                    <p class="mt-2">Your message has been sent!</p>
+                    <p class="mt-4">
+                        <Link
+                            href="/contact"
+                            variant="default"
+                            class="text-base"
+                        >
+                            Send another message
+                        </Link>
+                    </p>
+                </ResponseMessage>
+            ) : (
+                <form
+                    method="POST"
+                    action={actions.contact}
+                    data-requires-turnstile
+                >
+                    {result?.error && (
+                        <ResponseMessage
+                            title="Oops! Something went wrong."
+                            intent={"error"}
+                            class="mb-6"
+                        >
+                            <p>
+                                {result.error.code === "BAD_REQUEST"
+                                    ? "We could not send your message. Please check the form and try again."
+                                    : "Something went wrong on our side. Please try again later."}
+                            </p>
+                        </ResponseMessage>
+                    )}
+
+                    <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+                        <div>
+                            <label
+                                for="name"
+                                class="block text-sm leading-6 font-semibold"
+                            >
+                                Name
+                            </label>
+                            <div class="mt-2.5">
+                                <InputField
+                                    name="name"
+                                    placeholder="Your Name"
+                                    required
+                                    maxlength="100"
+                                />
+                            </div>
+                        </div>
+
+                        <div>
+                            <label
+                                for="email"
+                                class="block text-sm leading-6 font-semibold"
+                            >
+                                Email
+                            </label>
+                            <div class="mt-2.5">
+                                <InputField
+                                    type="email"
+                                    name="email"
+                                    placeholder="your@email.com"
+                                    required
+                                    maxlength="254"
+                                    autocomplete="email"
+                                    autocapitalize="off"
+                                    spellcheck="false"
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8">
+                        <label
+                            for="message"
+                            class="block text-sm leading-6 font-semibold"
+                        >
+                            Message
+                        </label>
+                        <div class="mt-2.5">
+                            <TextArea
+                                name="message"
+                                required
+                                maxlength="5000"
+                                rows="4"
+                                placeholder="How can I help?"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="mt-2 flex justify-center">
+                        <div class="max-w-xl text-center text-sm leading-relaxed text-gray-700 dark:text-gray-300">
+                            All the fields are required. By sending the form you
+                            agree to the
+                            <Link href="/legal/terms-of-service">
+                                Terms & Conditions
+                            </Link>
+                            and
+                            <Link href="/legal/privacy-policy">
+                                Privacy Policy
+                            </Link>
+                            .
+                        </div>
+                    </div>
+
+                    <TurnstileWidget
+                        action="contact"
+                        class="mt-8 flex justify-center"
+                    />
+
+                    <div class="mt-4">
+                        <Button type="submit" class="w-full" disabled>
+                            Send
+                        </Button>
+                    </div>
+                </form>
+            )
+        }
+    </Container>
+</BaseLayout>
+
+<script is:inline>
+    (function () {
+        const url = new URL(location.href);
+        if (url.searchParams.has("_action")) {
+            url.searchParams.delete("_action");
+            history.replaceState(null, "", url);
+        }
+    })();
+</script>
+
+<script is:inline>
+    (function () {
+        const KEY = "contact-form-cache";
+        const form = document.querySelector("form[data-requires-turnstile]");
+        if (!form) return;
+
+        // Restore
+        try {
+            const saved = JSON.parse(sessionStorage.getItem(KEY) || "{}");
+            for (const [k, v] of Object.entries(saved)) {
+                const el = form.elements.namedItem(k);
+                if (el && "value" in el) el.value = v;
+            }
+        } catch {}
+
+        form.addEventListener("submit", () => {
+            const data = {};
+            new FormData(form).forEach((v, k) => {
+                if (typeof v === "string") data[k] = v;
+            });
+            sessionStorage.setItem(KEY, JSON.stringify(data));
+        });
+
+        if (new URL(location.href).searchParams.get("success") === "1") {
+            sessionStorage.removeItem(KEY);
+        }
+    })();
+</script>

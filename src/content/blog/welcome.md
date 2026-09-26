@@ -1,0 +1,24 @@
+---
+draft: false
+featured: "1"
+title: "Welcome to My New Website"
+description: "A quick introduction to my new personal website built with Astro."
+authors:
+  - "Kaushik Kumar Mahato"
+pubDate: 2026-09-26
+license: mit
+tags:
+  - Welcome
+  - Astro
+image:
+  src: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1600&auto=format&fit=crop&q=80"
+  alt: "Laptop on a wooden desk"
+---
+
+Welcome to my personal website and blog!
+
+I recently rebuilt this site using [Astro](https://astro.build/) for high performance, clean aesthetics, and modern web standards.
+
+Here I'll be sharing articles, notes on software design and development, and showcasing projects that I'm working on.
+
+Stay tuned for more updates!

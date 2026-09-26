@@ -1,0 +1,32 @@
+---
+import Article from "../../components/content/Article.astro";
+import FormattedDate from "../../components/content/FormattedDate.astro";
+import Prose from "../../components/content/Prose.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import TermsContent, { frontmatter } from "../../content/legal/terms-of-service.md";
+
+const { title, lastUpdated, description } = frontmatter;
+---
+
+<BaseLayout {title} {description}>
+    <Article>
+        <header class="mb-12">
+            <h1 class="mb-6 text-4xl font-bold sm:text-5xl sm:leading-snug">
+                {title}
+            </h1>
+
+            {
+                lastUpdated && (
+                    <p class="text-lg">
+                        <span class="font-bold">Last updated:</span>{" "}
+                        <FormattedDate date={new Date(lastUpdated)} />
+                    </p>
+                )
+            }
+        </header>
+
+        <Prose>
+            <TermsContent />
+        </Prose>
+    </Article>
+</BaseLayout>
