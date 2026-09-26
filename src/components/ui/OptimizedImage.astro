@@ -22,6 +22,7 @@ const fetchPriorityVal =
     loading === "eager" ? (fetchpriority ?? "high") : undefined;
 
 const lqipUrl = isCloudinaryUrl(src) ? lqip(src) : undefined;
+const isLocal = typeof src === "string" && (src.startsWith("/") || src.startsWith("./") || src.startsWith("../"));
 ---
 
 <div
@@ -47,14 +48,26 @@ const lqipUrl = isCloudinaryUrl(src) ? lqip(src) : undefined;
         )
     }
 
-    <CldImage
-        src={src}
-        alt={alt}
-        class={cn("absolute inset-0 h-full w-full object-cover", imageClass)}
-        loading={loading}
-        fetchpriority={fetchPriorityVal}
-        format="auto"
-        quality="auto"
-        {...rest}
-    />
+    {
+        isLocal ? (
+            <img
+                src={src}
+                alt={alt}
+                class={cn("absolute inset-0 h-full w-full object-cover", imageClass)}
+                loading={loading}
+                fetchpriority={fetchPriorityVal}
+            />
+        ) : (
+            <CldImage
+                src={src}
+                alt={alt}
+                class={cn("absolute inset-0 h-full w-full object-cover", imageClass)}
+                loading={loading}
+                fetchpriority={fetchPriorityVal}
+                format="auto"
+                quality="auto"
+                {...rest}
+            />
+        )
+    }
 </div>

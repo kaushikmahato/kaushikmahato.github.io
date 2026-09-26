@@ -11,8 +11,8 @@ tags:
   - Welcome
   - Astro
 image:
-  src: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1600&auto=format&fit=crop&q=80"
-  alt: "Laptop on a wooden desk"
+  src: "/images/developer-desk.jpg"
+  alt: "Illustration of developer coding with analytics monitors"
 ---
 
 Welcome to my personal website and blog!

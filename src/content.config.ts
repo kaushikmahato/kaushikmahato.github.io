@@ -11,7 +11,7 @@ const featuredSchema = z
   });
 
 const imageSchema = z.object({
-  src: z.string().url(),
+  src: z.string(),
   alt: z.string().optional(),
 });
 

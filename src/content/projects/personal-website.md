@@ -15,8 +15,8 @@ repoUrl: "https://github.com/kaushikmahato/kaushikmahato.github.io"
 demoUrl: "https://kaushikmahato.github.io"
 status: "completed"
 image:
-  src: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1600&auto=format&fit=crop&q=80"
-  alt: "Website analytics and code"
+  src: "/images/developer-desk.jpg"
+  alt: "Illustration of developer coding with analytics monitors"
 ---
 
 My personal portfolio website and blog, migrated to an Astro-powered static architecture.
