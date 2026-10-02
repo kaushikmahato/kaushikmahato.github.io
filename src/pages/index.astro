@@ -6,6 +6,7 @@ import FeaturedContent from "../components/layouts/sections/FeaturedContent.astr
 import EmptyState from "../components/ui/EmptyState.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { attachMeta } from "../utils/meta";
+import { Icon } from "astro-icon/components";
 
 const allPosts = await getCollection("blog", ({ data }) => !data.draft);
 const allProjects = await getCollection("projects", ({ data }) => !data.draft);
@@ -22,18 +23,29 @@ const latestProjects = sortedProjects
     .slice(0, 2)
     .map((project) => attachMeta(project));
 
-const featured = [...allPosts, ...allProjects]
+const explicitFeatured = [...allPosts, ...allProjects]
     .filter((item) => item.data.featured !== undefined)
     .sort((a, b) => (a.data.featured ?? 0) - (b.data.featured ?? 0));
 
+// Ensure 3 featured items (1 primary + 2 stacked) for the template hero
+const displayFeatured =
+    explicitFeatured.length >= 3
+        ? explicitFeatured.slice(0, 3)
+        : [
+              ...explicitFeatured,
+              ...[...sortedPosts, ...sortedProjects].filter(
+                  (item) => !explicitFeatured.some((f) => f.id === item.id),
+              ),
+          ].slice(0, 3);
+
 const hasContent =
-    featured.length > 0 || latestPosts.length > 0 || latestProjects.length > 0;
+    displayFeatured.length > 0 || latestPosts.length > 0 || latestProjects.length > 0;
 
 const institutions = [
     { name: "IIT Kharagpur", note: "B.Tech CS" },
     { name: "Visa", note: "Infrastructure" },
-    { name: "VerSe", note: "DailyHunt & Josh Group" },
-    { name: "WEX", note: "Sr. Staff Engineer, R&D" },
+    { name: "VerSe", note: "Dailyhunt & Josh Group" },
+    { name: "WEX", note: "Enterprise R&D" },
 ];
 ---
 
@@ -41,106 +53,16 @@ const institutions = [
     title="Kaushik Kumar Mahato"
     description="Deep-Tech Architect & Exited Founder | IIT Kharagpur | Enterprise R&D in Agentic AI & Fintech"
 >
-    <Container class="space-y-16 py-12">
-        <!-- Hero Header -->
-        <section class="space-y-6 pt-2">
-            <h1
-                class="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl text-neutral-900 dark:text-neutral-50"
-            >
-                Hey there 👋
-            </h1>
-
-            <div
-                class="space-y-4 text-base sm:text-lg text-neutral-700 dark:text-neutral-300 leading-relaxed max-w-3xl"
-            >
-                <p>
-                    I'm <strong
-                        class="font-semibold text-neutral-900 dark:text-neutral-100"
-                        >Kaushik Kumar Mahato</strong
-                    > — an architect, exited founder, and systems thinker. Welcome
-                    to my personal website!
-                </p>
-                <p>
-                    Currently, I lead enterprise R&amp;D within strategic
-                    innovation as a Senior Staff Engineer at <a
-                        href="https://www.wexinc.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="font-medium text-neutral-900 underline decoration-neutral-400 decoration-dotted underline-offset-4 hover:decoration-solid dark:text-neutral-100"
-                        >WEX</a
-                    >, focusing on autonomous AI agent frameworks, multi-agent
-                    orchestration layers, and modern fintech infrastructure.
-                </p>
-                <p>
-                    Previously, I spent a decade tackling distributed systems
-                    challenges at places like <a
-                        href="https://visa.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="font-medium text-neutral-900 underline decoration-neutral-400 decoration-dotted underline-offset-4 hover:decoration-solid dark:text-neutral-100"
-                        >Visa</a
-                    > and <a
-                        href="https://www.verse.in/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="font-medium text-neutral-900 underline decoration-neutral-400 decoration-dotted underline-offset-4 hover:decoration-solid dark:text-neutral-100"
-                        >VerSe (DailyHunt Group)</a
-                    >, founded a consumer social platform that scaled to
-                    millions of users and led to an acquisition, and graduated
-                    in Computer Science from <a
-                        href="https://www.iitkgp.ac.in"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="font-medium text-neutral-900 underline decoration-neutral-400 decoration-dotted underline-offset-4 hover:decoration-solid dark:text-neutral-100"
-                        >IIT Kharagpur</a
-                    >.
-                </p>
-                <p>
-                    Learn more <a
-                        href="/about"
-                        class="font-medium text-neutral-900 underline underline-offset-4 hover:text-blue-600 dark:text-neutral-100 dark:hover:text-yellow-400"
-                        >about me</a
-                    >, check out my <a
-                        href="/projects"
-                        class="font-medium text-neutral-900 underline underline-offset-4 hover:text-blue-600 dark:text-neutral-100 dark:hover:text-yellow-400"
-                        >projects</a
-                    >, or explore my latest posts below 👇
-                </p>
-            </div>
-
-            <!-- Social Proof Bar -->
-            <div
-                class="border-y border-neutral-200 py-6 dark:border-neutral-800"
-            >
-                <p
-                    class="text-xs font-semibold uppercase tracking-wider text-neutral-400 dark:text-neutral-500"
-                >
-                    Experience &amp; Heritage
-                </p>
-                <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
-                    {
-                        institutions.map((item) => (
-                            <div class="rounded-lg border border-neutral-200 bg-neutral-50/70 p-3.5 transition-colors hover:border-neutral-300 dark:border-neutral-800 dark:bg-neutral-800/40 dark:hover:border-neutral-700">
-                                <span class="block text-base font-bold text-neutral-900 dark:text-neutral-100">
-                                    {item.name}
-                                </span>
-                                <span class="block text-xs text-neutral-500 dark:text-neutral-400">
-                                    {item.note}
-                                </span>
-                            </div>
-                        ))
-                    }
-                </div>
-            </div>
-        </section>
-
+    <Container class="space-y-16 py-8 sm:py-12">
         {
             hasContent ? (
                 <>
-                    {featured.length > 0 && (
-                        <FeaturedContent items={featured} />
+                    {/* 1. Featured Content (1 primary + 2 stacked) directly under navbar */}
+                    {displayFeatured.length > 0 && (
+                        <FeaturedContent items={displayFeatured} />
                     )}
 
+                    {/* 2. Latest Posts */}
                     {latestPosts.length > 0 && (
                         <ContentGrid
                             title="Latest Posts"
@@ -150,6 +72,7 @@ const institutions = [
                         />
                     )}
 
+                    {/* 3. Latest Projects */}
                     {latestProjects.length > 0 && (
                         <ContentGrid
                             title="Latest Projects"
@@ -159,6 +82,113 @@ const institutions = [
                             class="grid grid-cols-1 gap-8 md:grid-cols-2"
                         />
                     )}
+
+                    {/* 4. "About the Author" Anchor Card directly before footer */}
+                    <section
+                        aria-label="About the Author"
+                        class="relative overflow-hidden rounded-2xl border border-neutral-200 bg-linear-to-br from-neutral-50/90 via-white to-neutral-50/50 p-6 sm:p-8 md:p-10 shadow-xs dark:border-neutral-800 dark:from-neutral-900/90 dark:via-neutral-900/50 dark:to-neutral-950/90"
+                    >
+                        <div class="flex flex-col gap-6 sm:gap-8 md:flex-row md:items-center">
+                            <!-- Avatar -->
+                            <div class="shrink-0 flex items-center justify-start">
+                                <div class="relative">
+                                    <img
+                                        src="/images/profile.png"
+                                        alt="Kaushik Kumar Mahato"
+                                        class="size-20 sm:size-24 md:size-28 rounded-2xl border border-neutral-200 bg-white p-1.5 shadow-xs dark:border-neutral-700 dark:bg-neutral-800 object-contain ring-4 ring-neutral-100 dark:ring-neutral-800/60"
+                                        loading="lazy"
+                                    />
+                                    <span
+                                        class="absolute -bottom-1 -right-1 flex size-5 items-center justify-center rounded-full bg-emerald-500 ring-2 ring-white dark:ring-neutral-900"
+                                        title="Active in Enterprise R&D"
+                                    >
+                                        <span class="size-2 rounded-full bg-white"></span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Content Column -->
+                            <div class="flex-1 space-y-4">
+                                <div class="space-y-1">
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <span class="text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-yellow-400">
+                                            About the Author
+                                        </span>
+                                        <span class="text-neutral-300 dark:text-neutral-700">&middot;</span>
+                                        <span class="text-xs font-medium text-neutral-500 dark:text-neutral-400">
+                                            Deep-Tech Architect &amp; Systems Thinker
+                                        </span>
+                                    </div>
+                                    <h2 class="text-2xl font-bold tracking-tight text-neutral-900 sm:text-3xl dark:text-neutral-50">
+                                        Kaushik Kumar Mahato
+                                    </h2>
+                                </div>
+
+                                <!-- 2-Sentence Summary -->
+                                <p class="text-base leading-relaxed text-neutral-700 sm:text-lg dark:text-neutral-300 max-w-3xl">
+                                    Architect, exited founder, and systems thinker with over a decade of experience designing scalable, high-throughput distributed architectures. Currently leading enterprise R&amp;D in autonomous agentic AI orchestration and modern fintech infrastructure at WEX.
+                                </p>
+
+                                <!-- Experience Tags -->
+                                <div class="flex flex-wrap items-center gap-2 pt-1">
+                                    {institutions.map((item) => (
+                                        <span class="inline-flex items-center gap-1.5 rounded-lg border border-neutral-200 bg-white/95 px-3 py-1 text-xs font-semibold text-neutral-800 shadow-2xs transition-colors hover:border-neutral-300 dark:border-neutral-700/80 dark:bg-neutral-800/90 dark:text-neutral-200 dark:hover:border-neutral-600">
+                                            <span class="font-bold text-neutral-900 dark:text-neutral-100">{item.name}</span>
+                                            <span class="text-neutral-500 dark:text-neutral-400 font-normal">({item.note})</span>
+                                        </span>
+                                    ))}
+                                </div>
+
+                                <!-- CTAs & Socials -->
+                                <div class="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-neutral-200/80 dark:border-neutral-800/80">
+                                    <div class="flex flex-wrap items-center gap-3">
+                                        <a
+                                            href="/about"
+                                            class="inline-flex items-center gap-1.5 text-sm font-semibold text-blue-600 hover:text-blue-700 dark:text-yellow-400 dark:hover:text-yellow-300 group"
+                                        >
+                                            Read full bio
+                                            <Icon name="lucide:arrow-right" class="size-4 transition-transform duration-200 group-hover:translate-x-1" />
+                                        </a>
+                                        <span class="text-neutral-300 dark:text-neutral-700">&middot;</span>
+                                        <a
+                                            href="/contact"
+                                            class="text-sm font-medium text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-200"
+                                        >
+                                            Get in touch
+                                        </a>
+                                    </div>
+
+                                    <div class="flex items-center gap-2">
+                                        <a
+                                            href="https://github.com/kaushikmahato"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="rounded-lg p-2 text-neutral-600 hover:bg-neutral-200/70 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-100 transition-colors"
+                                            aria-label="GitHub Profile"
+                                        >
+                                            <Icon name="fa6-brands:github" class="size-5" />
+                                        </a>
+                                        <a
+                                            href="https://www.linkedin.com/in/kaushikmahato"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="rounded-lg p-2 text-neutral-600 hover:bg-neutral-200/70 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-100 transition-colors"
+                                            aria-label="LinkedIn Profile"
+                                        >
+                                            <Icon name="fa6-brands:linkedin" class="size-5" />
+                                        </a>
+                                        <a
+                                            href="/rss.xml"
+                                            class="rounded-lg p-2 text-neutral-600 hover:bg-neutral-200/70 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-100 transition-colors"
+                                            aria-label="RSS Feed"
+                                        >
+                                            <Icon name="lucide:rss" class="size-5" />
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
                 </>
             ) : (
                 <EmptyState
