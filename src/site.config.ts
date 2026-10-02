@@ -9,8 +9,8 @@ export const SITE_SETTINGS = {
     {
       icon: "github",
       label: "GitHub",
-      url: "https://github.com/kaushikmahato",
-      handle: "kaushikmahato",
+      url: "https://github.com/kikmak42",
+      handle: "kikmak42",
     },
   ],
 };
