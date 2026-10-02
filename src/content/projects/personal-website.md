@@ -1,6 +1,5 @@
 ---
 draft: false
-featured: "3"
 title: "Personal Website & Blog"
 description: "A fast, minimalist personal website built with Astro and Tailwind CSS."
 authors:
