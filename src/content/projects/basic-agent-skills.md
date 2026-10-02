@@ -3,6 +3,8 @@ draft: false
 featured: "1"
 title: "Basic Agent Skills Corpus"
 description: "A collection of OS-agnostic skills that patch well-known LLM blind spots by providing deterministic tools and scripts for agents."
+authors:
+  - "Kaushik Kumar Mahato"
 pubDate: 2026-10-02
 license: mit
 tags:
@@ -12,6 +14,9 @@ tags:
   - Bash
 repoUrl: "https://github.com/kikmak42/basic-agent-skills"
 status: "in-progress"
+image:
+  src: "/images/basic-agent-skills.jpg"
+  alt: "Illustration of patching LLM with deterministic skills"
 ---
 
 A collection of OS-agnostic skills designed to patch well-known Large Language Model (LLM) blind spots — the types of deterministic tasks that models struggle to perform reliably on their own and must delegate to actual tools or scripts.
