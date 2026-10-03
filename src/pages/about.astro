@@ -1,6 +1,5 @@
 ---
 import Container from "../components/layouts/Container.astro";
-import PageTitle from "../components/ui/PageTitle.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Prose from "../components/content/Prose.astro";
 import AboutContent, { frontmatter } from "../content/about/index.md";
@@ -22,15 +21,26 @@ const institutions = [
 
 <BaseLayout {title} {description}>
     <Container class="mx-auto max-w-4xl py-12">
-        <PageTitle title="About Me" />
+        <header class="space-y-3">
+            <h1 class="text-4xl font-bold tracking-tight text-neutral-900 sm:text-5xl dark:text-neutral-50">
+                About Me
+            </h1>
 
-        <!-- Sub-headline / Tagline -->
-        <p class="mt-2 text-sm text-neutral-600 sm:text-base dark:text-neutral-400">
-            Deep-Tech Architect &amp; Exited Founder <span class="text-neutral-300 dark:text-neutral-600">|</span> IIT Kharagpur <span class="text-neutral-300 dark:text-neutral-600">|</span> Enterprise R&amp;D in Agentic AI &amp; Fintech
-        </p>
+            <!-- Sub-headline / Tagline -->
+            <p class="text-sm font-medium text-neutral-500 sm:text-base dark:text-neutral-400">
+                Deep-Tech Architect &amp; Exited Founder <span class="text-neutral-300 dark:text-neutral-600">|</span> IIT Kharagpur <span class="text-neutral-300 dark:text-neutral-600">|</span> Enterprise R&amp;D in Agentic AI &amp; Fintech
+            </p>
+
+            <!-- Brief 2-line intro -->
+            <p class="pt-1 text-base leading-relaxed text-neutral-700 sm:text-lg dark:text-neutral-300">
+                A personal space documenting thoughts on distributed systems architecture, autonomous agentic workflows, and lessons learned from building software across startups and enterprise scale.
+            </p>
+        </header>
+
+        <hr class="my-8 border-neutral-200 dark:border-neutral-800" />
 
         <!-- Markdown Content from index.md -->
-        <Prose class:list={"mt-10"}>
+        <Prose class:list={"mt-8"}>
             <AboutContent />
         </Prose>
 
