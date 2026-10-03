@@ -1,16 +1,16 @@
 ---
 import Container from "../components/layouts/Container.astro";
 import PageTitle from "../components/ui/PageTitle.astro";
-import SocialLinks from "../components/ui/SocialLinks.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Prose from "../components/content/Prose.astro";
 import AboutContent, { frontmatter } from "../content/about/index.md";
 import { Icon } from "astro-icon/components";
+import { SITE_SETTINGS } from "../site.config";
 
 const title = frontmatter?.title ?? "About Me";
 const description =
     frontmatter?.description ??
-    "Background, systems philosophy, and the ideas behind this personal knowledge space.";
+    "Deep-Tech Architect & Exited Founder | IIT Kharagpur | Enterprise R&D in Agentic AI & Fintech";
 
 const institutions = [
     { name: "IIT Kharagpur", note: "B.Tech CS" },
@@ -26,11 +26,16 @@ const institutions = [
 
         <!-- Sub-headline / Tagline -->
         <p class="mt-2 text-sm text-neutral-600 sm:text-base dark:text-neutral-400">
-            Systems architecture, distributed engineering, and notes on autonomous agentic workflows.
+            Deep-Tech Architect &amp; Exited Founder <span class="text-neutral-300 dark:text-neutral-600">|</span> IIT Kharagpur <span class="text-neutral-300 dark:text-neutral-600">|</span> Enterprise R&amp;D in Agentic AI &amp; Fintech
         </p>
 
-        <!-- Social Proof Bar -->
-        <div class="mt-8 border-y border-neutral-200 py-6 dark:border-neutral-800">
+        <!-- Markdown Content from index.md -->
+        <Prose class:list={"mt-10"}>
+            <AboutContent />
+        </Prose>
+
+        <!-- Experience & Heritage Section -->
+        <div class="mt-16 border-t border-neutral-200 pt-10 dark:border-neutral-800">
             <p class="text-xs font-semibold uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
                 Experience &amp; Heritage
             </p>
@@ -50,25 +55,34 @@ const institutions = [
             </div>
         </div>
 
-        <!-- Markdown Content from index.md -->
-        <Prose class:list={"mt-12"}>
-            <AboutContent />
-        </Prose>
-
-        <div class="mt-16 border-t border-neutral-200 pt-10 px-4 sm:px-6 md:px-0 dark:border-neutral-800">
-            <h2 class="text-2xl font-bold">Connect with me</h2>
-            <p class="mt-2 text-gray-700 dark:text-gray-300">
-                Open to discussions around multi-agent architectures, distributed systems, and systems engineering.
+        <!-- Connect with me Section -->
+        <div class="mt-12 border-t border-neutral-200 pt-10 dark:border-neutral-800">
+            <h2 class="text-2xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50">Connect with me</h2>
+            <p class="mt-2 text-base text-neutral-600 dark:text-neutral-400">
+                Interested in discussing distributed architecture, multi-agent AI systems, or potential collaborations? Connect with me on LinkedIn or send a direct note via the Contact page.
             </p>
 
             <div class="mt-6 flex flex-wrap items-center gap-3">
-                <SocialLinks appearance={"chip"} />
+                {
+                    SITE_SETTINGS.socials.map((s) => (
+                        <a
+                            href={s.url}
+                            target="_blank"
+                            rel="me noopener noreferrer"
+                            class="inline-flex items-center gap-2 rounded-lg border border-neutral-200 bg-neutral-50/60 px-3.5 py-2.5 text-sm font-medium text-neutral-800 transition duration-200 hover:border-neutral-300 hover:bg-neutral-100 hover:text-neutral-950 dark:border-neutral-800 dark:bg-neutral-900/40 dark:text-neutral-300 dark:hover:border-neutral-700 dark:hover:bg-neutral-800 dark:hover:text-neutral-100"
+                            aria-label={s.label}
+                        >
+                            <Icon name={`fa6-brands:${s.icon}`} class="size-4" />
+                            <span>{s.label}</span>
+                        </a>
+                    ))
+                }
                 <a
                     href="/contact"
-                    class="inline-flex items-center gap-2 rounded-md bg-neutral-200 px-4 py-3.5 text-sm font-medium text-neutral-950 transition duration-250 hover:bg-neutral-300 active:scale-95 dark:bg-neutral-700 dark:text-neutral-50 dark:hover:bg-neutral-600"
+                    class="inline-flex items-center gap-2 rounded-lg border border-neutral-200 bg-neutral-50/60 px-3.5 py-2.5 text-sm font-medium text-neutral-800 transition duration-200 hover:border-neutral-300 hover:bg-neutral-100 hover:text-neutral-950 dark:border-neutral-800 dark:bg-neutral-900/40 dark:text-neutral-300 dark:hover:border-neutral-700 dark:hover:bg-neutral-800 dark:hover:text-neutral-100"
                     aria-label="Send a message via the Contact page"
                 >
-                    <Icon name="lucide:mail" class="size-6 text-neutral-700 dark:text-neutral-300" />
+                    <Icon name="lucide:mail" class="size-4" />
                     <span>Get in touch</span>
                 </a>
             </div>
