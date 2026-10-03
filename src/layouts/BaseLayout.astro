@@ -14,12 +14,14 @@ interface Props {
     title: string;
     description?: string;
     ogImage?: string;
+    ogType?: string;
 }
 
 const {
     title = SITE_SETTINGS.title,
     description = SITE_SETTINGS.description,
     ogImage = SITE_SETTINGS.ogImages,
+    ogType = "website",
 } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
@@ -37,11 +39,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
         <title>{title}</title>
         <meta name="description" content={description} />
+        <meta name="author" content={SITE_SETTINGS.owner} />
         <link rel="canonical" href={canonicalURL} />
 
+        <meta property="og:site_name" content={SITE_SETTINGS.title} />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
-        <meta property="og:type" content="website" />
+        <meta property="og:type" content={ogType} />
         <meta property="og:url" content={canonicalURL} />
         {
             ogImage && (

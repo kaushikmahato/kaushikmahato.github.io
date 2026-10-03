@@ -10,7 +10,7 @@ const projects = (await getCollection("projects", ({ data }) => !data.draft))
 
 <ListLayout
     title="Projects"
-    description="A collection of my projects."
+    description="Selected systems, open source tools, and architecture experiments."
     ogImage="https://res.cloudinary.com/dellp9a4z/image/upload/v1756758388/og-projects_mj7lcc.png"
     entries={projects}
 />

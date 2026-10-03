@@ -1,6 +1,7 @@
 export const SITE_SETTINGS = {
   title: "Kaushik Kumar Mahato",
-  description: "Personal website and blog of Kaushik Kumar Mahato",
+  description:
+    "A personal knowledge space and engineering notebook by Kaushik Kumar Mahato. Architecting distributed systems, agentic AI architectures, systems thinking, and technical reflections.",
   owner: "Kaushik Kumar Mahato",
   buyMeACoffeeUrl: "https://www.buymeacoffee.com/kaushikmahato",
   ogImages:

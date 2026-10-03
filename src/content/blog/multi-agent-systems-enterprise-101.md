@@ -56,25 +56,25 @@ When architecting these systems for production, I always rely on four primary te
 In high-concurrency enterprise settings, naive conversational chaining between agents introduces compounding latency, hallucination drift, and failure cascading. Instead, production systems structure agent responsibilities into distinct modular archetypes, much like our consulting firm:
 
 ```text
-[ Enterprise Goal / User Intent ]
-               │
-               ▼
-     ┌───────────────────┐
-     │ COORDINATOR AGENT │ ◄─── [ Governance Policy & Auth ]
-     │ (Planning & DAG)  │
-     └─────────┬─────────┘
-               │
-   ┌───────────┼───────────┐
-   ▼           ▼           ▼
-┌─────────┐ ┌─────────┐ ┌─────────┐
-│SPECIALIST│ │ LEARNER │ │INTERFACE│
-│  AGENT  │ │  AGENT  │ │  AGENT  │
-└────┬────┘ └────┬────┘ └────┬────┘
-     │           │           │
-     ▼           ▼           ▼
-[ Enterprise Integrations ]  [ Human-in-the-Loop ]
-• Legacy ERP   • Cloud CRM
-• Supply Chain • HR Systems
+        [ Enterprise Goal / User Intent ]
+                        │
+                        ▼
+             ┌─────────────────────┐
+             │  COORDINATOR AGENT  │ ◄─── [ Governance Policy & Auth ]
+             │  (Planning & DAG)   │
+             └──────────┬──────────┘
+                        │
+        ┌───────────────┼───────────────┐
+        ▼               ▼               ▼
+ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐
+ │ SPECIALIST  │ │   LEARNER   │ │  INTERFACE  │
+ │    AGENT    │ │    AGENT    │ │    AGENT    │
+ └──────┬──────┘ └──────┬──────┘ └──────┬──────┘
+        │               │               │
+        ▼               ▼               ▼
+ [ Enterprise Integrations ]   [ Human-in-the-Loop ]
+ • Legacy ERP   • Cloud CRM
+ • Supply Chain • HR Systems
 ```
 
 ### 1. The Coordinator Agent

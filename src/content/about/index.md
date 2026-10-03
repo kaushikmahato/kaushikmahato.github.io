@@ -1,6 +1,6 @@
 ---
 title: "About Me"
-description: "Deep-Tech Architect & Exited Founder | IIT Kharagpur | Enterprise R&D in Agentic AI & Fintech."
+description: "Background, systems philosophy, and the ideas behind this personal knowledge space."
 ---
 
 ### Architect. Founder. Systems Thinker.

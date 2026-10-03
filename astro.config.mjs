@@ -37,6 +37,7 @@ export default defineConfig({
       provider: fontProviders.local(),
       name: "JetBrainsMono",
       cssVariable: "--font-jet-brains-mono",
+      fallbacks: ["monospace"],
       options: {
         variants: [
           {
@@ -57,6 +58,12 @@ export default defineConfig({
     expressiveCode({
       plugins: [pluginLineNumbers()],
       themes: ["aurora-x"],
+      styleOverrides: {
+        codeFontFamily:
+          "var(--font-jet-brains-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace)",
+        uiFontFamily:
+          "var(--font-inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif)",
+      },
     }),
   ],
 
