@@ -3,7 +3,7 @@ title: "About Me"
 description: "Background, systems philosophy, and the ideas behind this personal knowledge space."
 ---
 
-### Architect. Founder. Systems Thinker.
+### Architect. Researcher. Innovator.
 
 I build scalable, high-throughput systems that turn cutting-edge computational research into resilient production software. My work spans the complete lifecycle of modern tech—from foundational algorithms to internet-scale consumer distribution and enterprise innovation pipelines.
 

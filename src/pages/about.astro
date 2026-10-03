@@ -24,22 +24,8 @@ const institutions = [
     <Container class="mx-auto max-w-4xl py-12">
         <PageTitle title="About Me" />
 
-        <div class="space-y-3">
-            <!-- Sub-headline / Tagline -->
-            <p class="text-sm font-semibold tracking-wide text-neutral-500 sm:text-base dark:text-neutral-400">
-                Deep-Tech Architect &amp; Exited Founder <span class="text-neutral-300 dark:text-neutral-600">|</span> IIT Kharagpur <span class="text-neutral-300 dark:text-neutral-600">|</span> Enterprise R&amp;D in Agentic AI &amp; Fintech
-            </p>
-
-            <!-- 2-sentence intro -->
-            <p class="text-base leading-relaxed text-neutral-700 sm:text-lg dark:text-neutral-300">
-                Architect, exited founder, and systems thinker with over a decade of experience designing scalable, high-throughput distributed architectures. Currently leading enterprise R&amp;D in autonomous agentic AI orchestration and modern fintech infrastructure at WEX.
-            </p>
-        </div>
-
-        <hr class="my-8 border-neutral-200 dark:border-neutral-800" />
-
         <!-- Markdown Content from index.md -->
-        <Prose class:list={"mt-8"}>
+        <Prose>
             <AboutContent />
         </Prose>
 
