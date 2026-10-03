@@ -13,6 +13,12 @@ export const SITE_SETTINGS = {
       url: "https://github.com/kikmak42",
       handle: "kikmak42",
     },
+    {
+      icon: "linkedin",
+      label: "LinkedIn",
+      url: "https://www.linkedin.com/in/kaushikmahato",
+      handle: "kaushikmahato",
+    },
   ],
 };
 

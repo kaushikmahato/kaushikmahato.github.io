@@ -5,6 +5,7 @@ import SocialLinks from "../components/ui/SocialLinks.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Prose from "../components/content/Prose.astro";
 import AboutContent, { frontmatter } from "../content/about/index.md";
+import { Icon } from "astro-icon/components";
 
 const title = frontmatter?.title ?? "About Me";
 const description =
@@ -60,7 +61,17 @@ const institutions = [
                 Open to discussions around multi-agent architectures, distributed systems, and systems engineering.
             </p>
 
-            <SocialLinks class="mt-6" appearance={"chip"} />
+            <div class="mt-6 flex flex-wrap items-center gap-3">
+                <SocialLinks appearance={"chip"} />
+                <a
+                    href="/contact"
+                    class="inline-flex items-center gap-2 rounded-md bg-neutral-200 px-4 py-3.5 text-sm font-medium text-neutral-950 transition duration-250 hover:bg-neutral-300 active:scale-95 dark:bg-neutral-700 dark:text-neutral-50 dark:hover:bg-neutral-600"
+                    aria-label="Send a message via the Contact page"
+                >
+                    <Icon name="lucide:mail" class="size-6 text-neutral-700 dark:text-neutral-300" />
+                    <span>Get in touch</span>
+                </a>
+            </div>
         </div>
     </Container>
 </BaseLayout>

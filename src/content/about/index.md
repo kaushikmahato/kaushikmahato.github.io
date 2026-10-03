@@ -32,3 +32,7 @@ Today, as a **Senior Staff Engineer at WEX**, I lead enterprise R&D within strat
 - **Autonomous Systems:** Designing practical, deterministic multi-agent architectures that automate non-trivial enterprise workflows.
 - **High-Throughput Engineering:** Eliminating bottlenecks in distributed systems, real-time data streaming, and payment infrastructure.
 - **Venture & Product Strategy:** Helping early-stage teams navigate the architectural and operational pitfalls of the 0-to-1 phase.
+
+---
+
+Interested in discussing distributed architecture, multi-agent AI systems, or potential collaborations? Connect with me on [LinkedIn](https://www.linkedin.com/in/kaushikmahato) or send a direct note via the [Contact page](/contact).
